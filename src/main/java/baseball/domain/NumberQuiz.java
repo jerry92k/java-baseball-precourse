@@ -86,13 +86,13 @@ public class NumberQuiz {
 
 	private void validateNumber(int number) {
 		if(number<=0 || number>9){
-			throw new InvalidInputCommandException("1~9 숫자 세가지 조합으로 입력해주세요.");
+			throw new InvalidInputCommandException("1~9 사이 숫자 세 가지 조합으로 입력해주세요.");
 		}
 	}
 
 	private void validateAnswerLength(String answer){
 		if(answer.length()!=quizNumbers.length){
-			throw new InvalidInputCommandException(quizNumbers.length+"자리 숫자를 입력해주세요.");
+			throw new InvalidInputCommandException("1~9 사이 숫자 세 가지 조합으로 입력해주세요.");
 		}
 	}
 
@@ -104,7 +104,7 @@ public class NumberQuiz {
 	private void validateDistinctNumbers(int[] answer){
 		Set<Integer> answerSet = getDistinctSet(answer);
 		if(answerSet.size()<3){
-			System.out.println("[INFO] : 정답은 서로 다른 "+quizSize+"개의 수로 이루어진 세자리 수 입니다. 중복된 숫자는 존재하지 않습니다.");
+			System.out.println("[INFO] : 정답은 서로 다른 세 개의 수로 이루어진 세 자리 수 입니다. 중복된 숫자는 존재하지 않습니다.");
 		}
 	}
 
