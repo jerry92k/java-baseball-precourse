@@ -13,6 +13,8 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import baseball.exception.InvalidInputCommandException;
+
 class NumberQuizTest {
 
 	@RepeatedTest(100)
@@ -61,9 +63,10 @@ class NumberQuizTest {
 		NumberQuiz numberQuiz= new NumberQuiz();
 		numberQuiz.produceRandomQuiz();
 
-		assertThatIllegalArgumentException().isThrownBy(()->{
+		assertThatThrownBy(()->{
 			numberQuiz.solveQuiz(input);
-		});
+		}).isInstanceOf(InvalidInputCommandException.class);
+
 	}
 
 	@ParameterizedTest
