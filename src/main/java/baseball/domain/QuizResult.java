@@ -1,6 +1,8 @@
 package baseball.domain;
 
-import java.util.Set;
+/**
+ * 사용자가 게임을 푼 결과 객체
+ */
 
 public class QuizResult {
 	private int strike;
@@ -33,9 +35,6 @@ public class QuizResult {
 		ball++;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "QuizResult{" +
@@ -44,24 +43,35 @@ public class QuizResult {
 			'}';
 	}
 
-	public String getResultPrint(){
+	public boolean isSolved(){
+		if(strike==3){
+			return true;
+		}
+		return false;
+	}
+
+	public String getHint(){
 		if(strike==0 && ball==0 ){
 			return HintType.Nothing.getValue();
 		}
-		StringBuilder result=new StringBuilder();
-
-		if(strike>0){
-			result.append(strike);
-			result.append(HintType.Strike.getValue());
-			result.append(" ");
-			// ball이 0개인 경우 출력시 마지막에 공백이 포함됨. 단순 출력이 아닌 경우에는 strike만 존재하는 경우를 고려하여 공백없는 문자열 생성 해야함
-		}
-
-		if(ball>0){
-			result.append(ball);
-			result.append(HintType.Ball.getValue());
-		}
-
-		return result.toString();
+		String strikeHint=getStrikeHint();
+		String ballHint=getBallHint();
+		return strike>0 && ball>0 ?
+			String.join(" ",strikeHint,ballHint) : strikeHint+ballHint;
 	}
+
+	private String getBallHint() {
+		if(ball==0){
+			return "";
+		}
+		return ball+HintType.Ball.getValue();
+	}
+
+	private String getStrikeHint() {
+		if(strike==0){
+			return "";
+		}
+		return strike+HintType.Strike.getValue();
+	}
+
 }
