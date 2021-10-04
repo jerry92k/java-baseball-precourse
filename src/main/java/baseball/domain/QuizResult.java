@@ -7,6 +7,7 @@ package baseball.domain;
 public class QuizResult {
 	private int strike;
 	private int ball;
+	private final int correctStrike = 3;
 
 	public QuizResult() {
 	}
@@ -44,34 +45,33 @@ public class QuizResult {
 	}
 
 	public boolean isSolved() {
-		if(strike==3) {
+		if(strike == correctStrike) {
 			return true;
 		}
 		return false;
 	}
 
 	public String getHint() {
-		if(strike==0 && ball==0 ) {
+		if(strike == 0 && ball == 0 ) {
 			return HintType.Nothing.getValue();
 		}
-		String strikeHint=getStrikeHint();
-		String ballHint=getBallHint();
-		return strike>0 && ball>0 ?
-			String.join(" ",strikeHint,ballHint) : strikeHint+ballHint;
+		String strikeHint = getStrikeHint();
+		String ballHint = getBallHint();
+		return strike > 0 && ball > 0 ? String.join(" ", strikeHint, ballHint) : strikeHint + ballHint;
 	}
 
 	private String getBallHint() {
-		if(ball==0) {
+		if(ball == 0) {
 			return "";
 		}
-		return ball+HintType.Ball.getValue();
+		return ball + HintType.Ball.getValue();
 	}
 
 	private String getStrikeHint() {
-		if(strike==0) {
+		if(strike == 0) {
 			return "";
 		}
-		return strike+HintType.Strike.getValue();
+		return strike + HintType.Strike.getValue();
 	}
 
 }

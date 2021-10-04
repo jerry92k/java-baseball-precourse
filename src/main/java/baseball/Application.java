@@ -7,7 +7,7 @@ import nextstep.utils.Console;
 
 public class Application {
     public static void main(String[] args) {
-        Application application=new Application();
+        Application application = new Application();
         application.startGame();
     }
 
@@ -30,8 +30,7 @@ public class Application {
     }
 
     public void gameRoutine(){
-
-        NumberQuiz numberQuiz=new NumberQuiz();
+        NumberQuiz numberQuiz = new NumberQuiz();
         numberQuiz.produceRandomQuiz();
         while (!tryMatchNumber(numberQuiz)) {}
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 끝");
@@ -39,7 +38,7 @@ public class Application {
 
     private void validateGameStateCommand(String input) {
 
-        if(input.equals("1")||input.equals("2")) {
+        if(input.equals("1") || input.equals("2")) {
             return;
         }
         throw new InvalidInputCommandException("올바른 값이 입력되지 않았습니다.");
