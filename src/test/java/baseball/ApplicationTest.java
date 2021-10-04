@@ -58,7 +58,7 @@ public class ApplicationTest extends NSTest {
                 .when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
                 .thenReturn(1, 3, 5);
             running("333");
-            verify("중복된 숫자는 존재하지 않습니다.","1스트라이크 2볼");
+            verify("[INFO] : 정답은 서로 다른 세 개의 수로 이루어진 세 자리 수 입니다. 중복된 숫자는 존재하지 않습니다.","1스트라이크 2볼");
         }
     }
 
