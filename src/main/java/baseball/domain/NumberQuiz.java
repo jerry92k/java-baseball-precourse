@@ -7,11 +7,16 @@ import baseball.exception.InvalidInputCommandException;
 
 import nextstep.utils.Randoms;
 
-/**
- * 3개의 서로 다른 숫자로 이루어진 게임
- */
-
 public class NumberQuiz {
+
+	/**
+	 * @author Kim Jihee
+	 * @version 1.0
+	 * @since 1.0
+	 *
+	 * 게임 객체. 게임을 셋팅하고 게임 결과를 생성
+	 */
+
 	private final int quizSize = 3;
 
 	private int[] quizNumbers;
@@ -24,11 +29,11 @@ public class NumberQuiz {
 		return quizNumbers;
 	}
 
+	/* 게임 문제가 될 서로 다른 세개의 숫자를 생성하여 int형 배열에 저장 */
 	public void produceRandomQuiz() {
 		Set<Integer> picked = new HashSet<>();
 
 		for(int i = 0; i < quizNumbers.length; i++) {
-			// 서로 다른 세개의 숫자를 추출하기 위해, 중복된 숫자를 뽑을 경우 다시 뽑기
 			quizNumbers[i] = makeRandomNumber(picked);
 			picked.add(quizNumbers[i]);
 		}
@@ -37,6 +42,7 @@ public class NumberQuiz {
 	private int makeRandomNumber(Set<Integer> picked) {
 		int random = Randoms.pickNumberInRange(1,9);
 
+		// 중복된 숫자를 뽑을 경우 다시 생성
 		while(picked.contains(random)) {
 			random = Randoms.pickNumberInRange(1,9);
 		}
@@ -44,14 +50,15 @@ public class NumberQuiz {
 		return random;
 	}
 
+	/* String 타입으로 받은 입력값을 int[] 타입 배열로 변환하여 내부 호출 */
 	public QuizResult solveQuiz(String answer) {
-		validateAnswerLength(answer);
 		return solveQuiz(changeStringToIntArr(answer));
 	}
 
+	/* 플레이어의 입력값에 대한 풀이 결과를 QuizResult로 리턴 */
 	public QuizResult solveQuiz(int[] answer) {
-		checkIsNumber(answer);
-		validateDistinctNumbers(answer);
+		validateQuizProdueced();
+		validateAnswer(answer);
 
 		QuizResult quizResult = new QuizResult();
 		quizResult.setBall(checkBall(answer));
@@ -59,7 +66,26 @@ public class NumberQuiz {
 		return quizResult;
 	}
 
-	public int checkBall(int[] answer) {
+	/* 플레이어 입력값에 대한 유효성 검증 */
+	private void validateAnswer(int[] answer){
+		validateAnswerLength(answer);
+		checkIsNumber(answer);
+		validateDistinctNumbers(answer);
+	}
+
+	/* produceRandomQuiz() 호출 전 solveQuiz() 호출하는 경우 예외 처리 */
+	private void validateQuizProdueced(){
+		if(quizNumbers==null){
+			throw new IllegalStateException("[ERROR] : 문제 생성이 제대로 되지 않았습니다. 문제 생성을 먼저 해주세요.\n[HINT] produceRandomQuiz()");
+		}
+
+		if(getDistinctSet(quizNumbers).contains(0)){
+			throw new IllegalStateException("[ERROR] : 문제 생성이 제대로 되지 않았습니다. 문제 생성을 먼저 해주세요.\n[HINT] produceRandomQuiz()");
+		}
+	}
+
+	/* 볼 갯수 카운트 */
+	private int checkBall(int[] answer) {
 		Set<Integer> quizNumsSet = getDistinctSet(quizNumbers);
 		int result = 0;
 
@@ -69,7 +95,9 @@ public class NumberQuiz {
 
 		return result;
 	}
-	public int checkStrike(int[] answer) {
+
+	/* 스트라이크 갯수 카운트 */
+	private int checkStrike(int[] answer) {
 		int result = 0;
 
 		for(int i = 0; i < answer.length; i++) {
@@ -79,6 +107,7 @@ public class NumberQuiz {
 		return result;
 	}
 
+	/* String을 int형 배열로 변환 */
 	private int[] changeStringToIntArr(String answer) {
 		int[] answerNums = new int[answer.length()];
 
@@ -89,6 +118,7 @@ public class NumberQuiz {
 		return answerNums;
 	}
 
+	/* 입력값에 숫자가 아닌 문자가 있는지 체크 */
 	private void checkIsNumber(int[] answer) {
 		for(int num : answer) {
 			validateNumber(num);
@@ -101,17 +131,20 @@ public class NumberQuiz {
 		}
 	}
 
-	private void validateAnswerLength(String answer) {
-		if(answer.length() != quizNumbers.length) {
+	private void validateAnswerLength(int[] answer) {
+		if(answer.length!=quizSize) {
 			throw new InvalidInputCommandException("1~9 사이 숫자 세 가지 조합으로 입력해주세요.");
 		}
 	}
 
 	public void setQuizNumbers(String numbers) {
-		validateAnswerLength(numbers);
-		quizNumbers= changeStringToIntArr(numbers);
+		int[] quizNums = changeStringToIntArr(numbers);
+		validateAnswerLength(quizNums);
+		checkIsNumber(quizNums);
+		quizNumbers=quizNums;
 	}
 
+	/* 플레이어 입력값에 중복된 숫자가 존재하는 경우 알림 메세지 출력 */
 	private void validateDistinctNumbers(int[] answer) {
 		Set<Integer> answerSet = getDistinctSet(answer);
 
