@@ -1,10 +1,15 @@
 package baseball.domain;
 
-/**
- * 사용자가 게임을 푼 결과 객체
- */
-
 public class QuizResult {
+
+	/**
+	 * @author Kim Jihee
+	 * @version 1.0
+	 * @since 1.0
+	 *
+	 * 게임 결과 클래스
+	 */
+
 	private int strike;
 	private int ball;
 	private final int correctStrike = 3;
@@ -45,7 +50,6 @@ public class QuizResult {
 	}
 
 	public boolean isSolved() {
-
 		if(strike == correctStrike) {
 			return true;
 		}
@@ -57,7 +61,7 @@ public class QuizResult {
 		if(strike == 0 && ball == 0 ) {
 			return HintType.Nothing.getValue();
 		}
-
+		/* 스트라이크와 볼이 모두 존재하는 경우에는 두 힌트 사이를 공백으로 연결*/
 		return strike > 0 && ball > 0 ? String.join(" ", getStrikeHint(), getBallHint()) : getStrikeHint() + getBallHint();
 	}
 
