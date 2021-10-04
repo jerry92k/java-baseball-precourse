@@ -43,15 +43,15 @@ public class QuizResult {
 			'}';
 	}
 
-	public boolean isSolved(){
-		if(strike==3){
+	public boolean isSolved() {
+		if(strike==3) {
 			return true;
 		}
 		return false;
 	}
 
-	public String getHint(){
-		if(strike==0 && ball==0 ){
+	public String getHint() {
+		if(strike==0 && ball==0 ) {
 			return HintType.Nothing.getValue();
 		}
 		String strikeHint=getStrikeHint();
@@ -61,14 +61,14 @@ public class QuizResult {
 	}
 
 	private String getBallHint() {
-		if(ball==0){
+		if(ball==0) {
 			return "";
 		}
 		return ball+HintType.Ball.getValue();
 	}
 
 	private String getStrikeHint() {
-		if(strike==0){
+		if(strike==0) {
 			return "";
 		}
 		return strike+HintType.Strike.getValue();

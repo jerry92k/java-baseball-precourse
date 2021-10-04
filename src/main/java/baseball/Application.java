@@ -14,7 +14,7 @@ public class Application {
     public void startGame() {
         do{
             gameRoutine();
-        }while (isContinueGame());
+        } while (isContinueGame());
     }
 
     public boolean isContinueGame() {
@@ -23,8 +23,7 @@ public class Application {
             String input = Console.readLine();
             validateGameStateCommand(input);
             return input.equals("1") ? true : false;
-        }
-        catch (InvalidInputCommandException ex){
+        } catch (InvalidInputCommandException ex) {
             System.out.println(ex.getMessage());
             return isContinueGame();
         }
@@ -34,14 +33,13 @@ public class Application {
 
         NumberQuiz numberQuiz=new NumberQuiz();
         numberQuiz.produceRandomQuiz();
-        while (!tryMatchNumber(numberQuiz)){
-        }
+        while (!tryMatchNumber(numberQuiz)) {}
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 끝");
     }
 
     private void validateGameStateCommand(String input) {
 
-        if(input.equals("1")||input.equals("2")){
+        if(input.equals("1")||input.equals("2")) {
             return;
         }
         throw new InvalidInputCommandException("올바른 값이 입력되지 않았습니다.");
@@ -53,8 +51,7 @@ public class Application {
             QuizResult quizResult = numberQuiz.solveQuiz(Console.readLine());
             System.out.println(quizResult.getHint());
             return quizResult.isSolved();
-        }
-        catch (InvalidInputCommandException ex){
+        } catch (InvalidInputCommandException ex) {
             System.out.println(ex.getMessage());
             return false;
         }
