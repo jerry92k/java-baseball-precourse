@@ -32,15 +32,17 @@ public class Application {
     public void gameRoutine(){
         NumberQuiz numberQuiz = new NumberQuiz();
         numberQuiz.produceRandomQuiz();
+
         while (!tryMatchNumber(numberQuiz)) {}
+
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 끝");
     }
 
     private void validateGameStateCommand(String input) {
-
         if(input.equals("1") || input.equals("2")) {
             return;
         }
+
         throw new InvalidInputCommandException("올바른 값이 입력되지 않았습니다.");
     }
 

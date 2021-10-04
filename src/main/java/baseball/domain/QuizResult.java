@@ -45,9 +45,11 @@ public class QuizResult {
 	}
 
 	public boolean isSolved() {
+
 		if(strike == correctStrike) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -55,6 +57,7 @@ public class QuizResult {
 		if(strike == 0 && ball == 0 ) {
 			return HintType.Nothing.getValue();
 		}
+
 		String strikeHint = getStrikeHint();
 		String ballHint = getBallHint();
 		return strike > 0 && ball > 0 ? String.join(" ", strikeHint, ballHint) : strikeHint + ballHint;
@@ -64,6 +67,7 @@ public class QuizResult {
 		if(ball == 0) {
 			return "";
 		}
+
 		return ball + HintType.Ball.getValue();
 	}
 
@@ -71,6 +75,7 @@ public class QuizResult {
 		if(strike == 0) {
 			return "";
 		}
+
 		return strike + HintType.Strike.getValue();
 	}
 
