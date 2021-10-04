@@ -58,9 +58,7 @@ public class QuizResult {
 			return HintType.Nothing.getValue();
 		}
 
-		String strikeHint = getStrikeHint();
-		String ballHint = getBallHint();
-		return strike > 0 && ball > 0 ? String.join(" ", strikeHint, ballHint) : strikeHint + ballHint;
+		return strike > 0 && ball > 0 ? String.join(" ", getStrikeHint(), getBallHint()) : getStrikeHint() + getBallHint();
 	}
 
 	private String getBallHint() {
