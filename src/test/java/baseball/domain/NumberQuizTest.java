@@ -79,5 +79,26 @@ class NumberQuizTest {
 		assertThat(quizResult.getStrike()).isEqualTo(strikeCount);
 		assertThat(quizResult.getBall()).isEqualTo(ballCount);
 
+		String expectedHint = getExpectedHint(strikeCount, ballCount);
+
+
+		assertThat(quizResult.getHint()).isEqualTo(expectedHint);
+	}
+
+	String getExpectedHint(int strikeCount, int ballCount){
+		if(strikeCount == 0 && ballCount == 0){
+			return "낫싱";
+		}
+		String expectedHint="";
+
+		if(strikeCount > 0) {
+			expectedHint = strikeCount + "스트라이크";
+		}
+
+		if(ballCount > 0) {
+			expectedHint = expectedHint.length() > 0 ? String.join(" ", expectedHint, ballCount + "볼") : ballCount + "볼";
+		}
+
+		return expectedHint;
 	}
 }
